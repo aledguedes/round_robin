@@ -1,0 +1,16 @@
+<h1 style="text-align: center;">RECCOSFUT</h1>
+
+<button class="btn btn-default" (click)="gerar()">CLICK AQUI</button>
+<!-- <button (click)="gerar()">CLICK AQUI</button> -->
+
+<div *ngFor="let jogos of listRodadas; let i = index">
+  <strong style="margin: 1rem 0;"
+    >Rodada {{ jogos.rodada < 10 ? '0' + jogos.rodada : jogos.rodada }}</strong
+  >
+  {{ jogos.dt_partida | date: 'dd/MM/yyyy' }}
+  <div *ngFor="let j of jogos.jogos">
+    <small> {{ j.mandator }} x {{ j.visitor }}</small>
+  </div>
+
+  <!-- listRodadas = {{ listRodadas | json  }} -->
+</div>
