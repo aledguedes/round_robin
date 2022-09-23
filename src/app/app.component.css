@@ -1,10 +1,7 @@
-p {
-  font-family: Lato;
-}
-
 .container {
   margin: 0 auto;
   width: 100%;
+  margin-top: 1.5rem;
 }
 
 h1 {
@@ -13,5 +10,35 @@ h1 {
 
 .rounds {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.turn-A,
+.turn-B {
+  width: 50%;
+}
+
+.grid-flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.grid-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.box-round {
+  color: #fff;
+  background-color: #044993;
+  text-align: center;
+  width: 350px;
+  border-radius: 10px;
+  margin: 0.6rem 0;
 }

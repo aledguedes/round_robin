@@ -4,28 +4,48 @@
 <div class="container">
   <div class="rounds">
     <div class="turn-A">
-      <h3>Primeiro turno</h3>
+      <h3 class="text-center">Primeiro turno</h3>
       <div *ngFor="let jogos of firstTurn; let i = index">
-        <strong style="margin: 1rem 0;"
-          >Rodada
-          {{ jogos.rodada < 10 ? '0' + jogos.rodada : jogos.rodada }}</strong
-        >
-        {{ jogos.dt_partida | date: 'dd/MM/yyyy' }}
-        <div *ngFor="let j of jogos.jogos">
-          <small> {{ j.mandator }} x {{ j.visitor }}</small>
+        <div class="grid-flex-center">
+          <div class="box-round">
+            <small class="text-center"
+              ><strong style="margin: 1rem 0;"
+                >Rodada
+                {{
+                  jogos.rodada < 10 ? '0' + jogos.rodada : jogos.rodada
+                }}</strong
+              ></small
+            >
+            <h6>{{ jogos.dt_partida | date: 'dd/MM/yyyy' }}</h6>
+          </div>
+        </div>
+        <div class="grid-center">
+          <div *ngFor="let j of jogos.jogos">
+            <small> {{ j.mandator }} x {{ j.visitor }}</small>
+          </div>
         </div>
       </div>
     </div>
     <div class="turn-B">
-      <h3>Segundo turno</h3>
+      <h3 class="text-center">Segundo turno</h3>
       <div *ngFor="let jogos of secondTurn; let i = index">
-        <strong style="margin: 1rem 0;"
-          >Rodada
-          {{ jogos.rodada < 10 ? '0' + jogos.rodada : jogos.rodada }}</strong
-        >
-        {{ jogos.dt_partida | date: 'dd/MM/yyyy' }}
-        <div *ngFor="let j of jogos.jogos">
-          <small> {{ j.mandator }} x {{ j.visitor }}</small>
+        <div class="grid-flex-center">
+          <div class="box-round">
+            <small class="text-center"
+              ><strong style="margin: 1rem 0;"
+                >Rodada
+                {{
+                  jogos.rodada < 10 ? '0' + jogos.rodada : jogos.rodada
+                }}</strong
+              ></small
+            >
+            <h6>{{ jogos.dt_partida | date: 'dd/MM/yyyy' }}</h6>
+          </div>
+        </div>
+        <div class="grid-center">
+          <div *ngFor="let j of jogos.jogos">
+            <small> {{ j.mandator }} x {{ j.visitor }}</small>
+          </div>
         </div>
       </div>
     </div>

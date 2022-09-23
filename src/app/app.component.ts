@@ -22,7 +22,7 @@ export class AppComponent {
   gerar() {
     // const time: any[] = this.times;
     const time: any = [
-      'Sãu Paulo',
+      'São Paulo',
       'Santos',
       'Corinthians',
       'Palmeiras',
