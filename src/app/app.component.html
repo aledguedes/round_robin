@@ -1,16 +1,33 @@
-<h1 style="text-align: center;">RECCOSFUT</h1>
+<h3 style="text-align: center;">RECCOSFUT</h3>
 
 <button class="btn btn-default" (click)="gerar()">CLICK AQUI</button>
-<!-- <button (click)="gerar()">CLICK AQUI</button> -->
-
-<div *ngFor="let jogos of listRodadas; let i = index">
-  <strong style="margin: 1rem 0;"
-    >Rodada {{ jogos.rodada < 10 ? '0' + jogos.rodada : jogos.rodada }}</strong
-  >
-  {{ jogos.dt_partida | date: 'dd/MM/yyyy' }}
-  <div *ngFor="let j of jogos.jogos">
-    <small> {{ j.mandator }} x {{ j.visitor }}</small>
+<div class="container">
+  <div class="rounds">
+    <div class="turn-A">
+      <h3>Primeiro turno</h3>
+      <div *ngFor="let jogos of firstTurn; let i = index">
+        <strong style="margin: 1rem 0;"
+          >Rodada
+          {{ jogos.rodada < 10 ? '0' + jogos.rodada : jogos.rodada }}</strong
+        >
+        {{ jogos.dt_partida | date: 'dd/MM/yyyy' }}
+        <div *ngFor="let j of jogos.jogos">
+          <small> {{ j.mandator }} x {{ j.visitor }}</small>
+        </div>
+      </div>
+    </div>
+    <div class="turn-B">
+      <h3>Segundo turno</h3>
+      <div *ngFor="let jogos of secondTurn; let i = index">
+        <strong style="margin: 1rem 0;"
+          >Rodada
+          {{ jogos.rodada < 10 ? '0' + jogos.rodada : jogos.rodada }}</strong
+        >
+        {{ jogos.dt_partida | date: 'dd/MM/yyyy' }}
+        <div *ngFor="let j of jogos.jogos">
+          <small> {{ j.mandator }} x {{ j.visitor }}</small>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <!-- listRodadas = {{ listRodadas | json  }} -->
 </div>
