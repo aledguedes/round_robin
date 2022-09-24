@@ -35,10 +35,10 @@ export class AppComponent {
     const time02 = time.splice(lengthArray / 2, Number.MAX_VALUE);
     const time01 = time;
     // console.log('ORIGINAL', time01, time02);
-    this.primeiroTruno(time01, time02, lengthArray);
-    this.segundoTurno(time02, time01, lengthArray);
+    this.firstTurn = this.segundoTurno(time01, time02, lengthArray);
+    this.secondTurn = this.segundoTurno(time02, time01, lengthArray);
   }
-
+/*
   primeiroTruno(timeA, timeB, lengthArray) {
     // console.log('PRIMEIRO TURNO', timeA, timeB, lengthArray);
     const round: any = [];
@@ -73,7 +73,7 @@ export class AppComponent {
     console.log('RESULT PRIMEIRO TURNO', round);
     this.firstTurn = round;
     // return round;
-  }
+  }*/
 
   segundoTurno(timeA, timeB, lengthArray) {
     const round: any = [];
@@ -106,7 +106,7 @@ export class AppComponent {
       timeB.splice(2, 0, back2[0]);
     }
     console.log('RESULT SEGUNDO TURNO', round);
-    this.secondTurn = round;
-    // return round;
+    // this.secondTurn = round;
+    return round;
   }
 }
