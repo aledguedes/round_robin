@@ -23,10 +23,13 @@
           <div *ngFor="let j of jogos.jogos">
             <small> {{ j.mandator }} x {{ j.visitor }}</small>
           </div>
+          <small class="my-3">
+            FOLGA NA RODADA: <strong>{{ jogos.folga }}</strong></small
+          >
         </div>
       </div>
     </div>
-    <div class="turn-B">
+    <!-- <div class="turn-B">
       <h3 class="text-center">Segundo turno</h3>
       <div *ngFor="let jogos of secondTurn; let i = index">
         <div class="grid-flex-center">
@@ -48,6 +51,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>
