@@ -14,11 +14,45 @@ export class AppComponent {
     { id: 4, name: 'Cruzeiro' },
     { id: 5, name: 'Bahia' },
     { id: 6, name: 'Ceará' },
+    { id: 7, name: 'Goiás' },
   ];
   firstTurn: any = [];
   secondTurn: any = [];
   tm_folga: any;
   classificacao = {};
+
+  groups = [
+    { id: 1, name: 'Grupo A', teams: [] },
+    { id: 2, name: 'Grupo B', teams: [] },
+  ];
+
+  sortear(teams: any) {
+    console.log('teams', teams);
+    let qtdGroups = this.groups.length,
+      qtdTeams = teams.length;
+
+    console.log('teqtdTeamsams', qtdGroups, qtdTeams);
+
+    let restByGroup = qtdTeams % qtdGroups,
+      numByGroup =
+        restByGroup != 0 ? (qtdTeams - 1) / qtdGroups : qtdTeams / qtdGroups;
+
+    console.log('teams', restByGroup, numByGroup);
+    let timeA = teams.splice(numByGroup, Number.MAX_VALUE);
+    let timeB = teams;
+
+    this.groups.forEach((gp: any, i: number) => {
+      console.log(gp, i);
+      for (let i = 0; i < numByGroup; i++) {
+        gp.teams.push(timeA[i]);
+      }
+    });
+    console.log(this.groups);
+  }
+
+  getRndInteger(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
+  }
 
   gerar() {
     // const time: any[] = this.times;
@@ -31,11 +65,12 @@ export class AppComponent {
       'Fluminense',
       'Vasco',
       'Botafogo',
-      'Batatais',
+      // 'Batatais',
     ];
+    this.sortear(time);
     const lengthArray = time.length - 1;
     console.log('lengthArray', lengthArray);
-    this.turnA(time, lengthArray);
+    // this.turnA(time, lengthArray);
   }
 
   turnA(times, lengthArray) {
