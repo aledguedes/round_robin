@@ -7,115 +7,154 @@ import { Component, VERSION } from '@angular/core';
 })
 export class AppComponent {
   name = 'Angular ' + VERSION.major;
-  times = [
-    { id: 1, name: 'São Paulo' },
-    { id: 2, name: 'Flamengo' },
-    { id: 3, name: 'Internacional' },
-    { id: 4, name: 'Cruzeiro' },
-    { id: 5, name: 'Bahia' },
-    { id: 6, name: 'Ceará' },
-    { id: 7, name: 'Goiás' },
-  ];
   firstTurn: any = [];
-  secondTurn: any = [];
-  tm_folga: any;
-  classificacao = {};
-
-  groups = [
-    { id: 1, name: 'Grupo A', teams: [] },
-    { id: 2, name: 'Grupo B', teams: [] },
-  ];
-
-  sortear(teams: any) {
-    console.log('teams', teams);
-    let qtdGroups = this.groups.length,
-      qtdTeams = teams.length;
-
-    console.log('teqtdTeamsams', qtdGroups, qtdTeams);
-
-    let restByGroup = qtdTeams % qtdGroups,
-      numByGroup =
-        restByGroup != 0 ? (qtdTeams - 1) / qtdGroups : qtdTeams / qtdGroups;
-
-    console.log('teams', restByGroup, numByGroup);
-    let timeA = teams.splice(numByGroup, Number.MAX_VALUE);
-    let timeB = teams;
-
-    this.groups.forEach((gp: any, i: number) => {
-      console.log(gp, i);
-      for (let i = 0; i < numByGroup; i++) {
-        gp.teams.push(timeA[i]);
-      }
-    });
-    console.log(this.groups);
-  }
-
-  getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min)) + min;
-  }
-
+  grupos: any;
   gerar() {
-    // const time: any[] = this.times;
-    const time: any = [
-      'São Paulo',
-      'Santos',
-      'Corinthians',
-      'Palmeiras',
-      'Flamengo',
-      'Fluminense',
-      'Vasco',
-      'Botafogo',
-      // 'Batatais',
-    ];
-    this.sortear(time);
-    const lengthArray = time.length - 1;
-    console.log('lengthArray', lengthArray);
-    // this.turnA(time, lengthArray);
+    let grupos = groups;
+    this.roundRobin(grupos);
   }
 
-  turnA(times, lengthArray) {
-    console.log('PRIMEIRO TURNO', times, lengthArray);
-    let timeA,
-      timeB,
-      timeF,
-      bkpT = [],
-      tam = lengthArray / 2 - 1;
-    const round: any = [];
-    let mandator: any;
-    let visitor: any;
-    let i = 0;
-    let k = 1;
-    timeA = times.splice(lengthArray / 2, Number.MAX_VALUE);
-    timeF = timeA.splice(timeA.length - 1, 1);
-    timeB = times;
+  roundRobin(groups: Group[]) {
+    for (const group of groups) {
+      const teamsCount = group.teams.length;
+      const matchesCount = teamsCount - 1;
+      const matchesPerRound = teamsCount / 2;
 
-    for (i = 0; i < lengthArray - 1; i++) {
-      let rodada = k,
-        folga = timeF[0],
-        dt_partida = new Date();
-      round[i] = {
-        rodada,
-        dt_partida,
-        folga,
-        jogos: [],
-      };
-      for (let j = 0; j < lengthArray / 2; j++) {
-        mandator = timeA[j];
-        visitor = timeB[j];
+      // Generate rounds for the first half of the season
+      for (let i = 0; i < matchesCount; i++) {
+        const round: { homeTeam: Team; awayTeam: Team }[] = [];
 
-        round[i].jogos.push({
-          mandator,
-          visitor,
-          folga,
-        });
+        for (let j = 0; j < matchesPerRound; j++) {
+          let homeTeamIndex = (i + j) % (teamsCount - 1);
+          let awayTeamIndex = (teamsCount - 1 - j + i) % (teamsCount - 1);
+
+          if (j === 0) {
+            awayTeamIndex += teamsCount - 1;
+          }
+
+          const homeTeam = group.teams[homeTeamIndex];
+          const awayTeam = group.teams[awayTeamIndex];
+
+          round.push({ homeTeam, awayTeam });
+        }
+
+        group.rounds.push(round);
+        this.firstTurn = group;
+        console.log('PRIMEIR TURNO', round);
       }
-      k++;
-      bkpT = timeF;
-      timeF = timeA.splice(timeA.length - 1, 1);
-      timeB.splice(Number.MAX_VALUE, 0, bkpT[0]);
-      bkpT = timeB.splice(0, 1);
-      timeA.splice(0, 0, bkpT[0]);
+
+      // Generate rounds for the second half of the season
+      for (let i = 0; i < matchesCount; i++) {
+        const round: { homeTeam: Team; awayTeam: Team }[] = [];
+
+        for (let j = 0; j < matchesPerRound; j++) {
+          let homeTeamIndex = (teamsCount - 1 - j + i) % (teamsCount - 1);
+          let awayTeamIndex = (i + j) % (teamsCount - 1);
+
+          if (j === 0) {
+            homeTeamIndex += teamsCount - 1;
+          }
+
+          const homeTeam = group.teams[homeTeamIndex];
+          const awayTeam = group.teams[awayTeamIndex];
+
+          round.push({ homeTeam, awayTeam });
+        }
+
+        group.rounds.push(round);
+      }
+      this.firstTurn = group;
+      console.log(group);
     }
-    this.firstTurn = round;
   }
 }
+
+interface Team {
+  id: number;
+  name: string;
+  surname: string;
+}
+
+interface Group {
+  id: number;
+  name_group: string;
+  rounds: { homeTeam: Team; awayTeam: Team }[][];
+  teams: Team[];
+}
+
+const groups: Group[] = [
+  {
+    id: 1,
+    name_group: 'GrupoA',
+    rounds: [],
+    teams: [
+      {
+        id: 5,
+        name: 'Grêmio Football Portoalegrense',
+        surname: 'Grêmio',
+      },
+      {
+        id: 1,
+        name: 'São Paulo Futebol Clube',
+        surname: 'São Paulo',
+      },
+      {
+        id: 2,
+        name: 'Clube de Regatas Flamento',
+        surname: 'Flamengo',
+      },
+      {
+        id: 3,
+        name: 'Cruzeiro Futebol Clube',
+        surname: 'Cruzeiro',
+      },
+      {
+        id: 4,
+        name: 'Clube Atlético Mineiro',
+        surname: 'Atlético Mineiro',
+      },
+      {
+        id: 6,
+        name: 'Sport Clube Internacional',
+        surname: 'Inter',
+      },
+    ],
+  },
+  {
+    id: 2,
+    name_group: 'GrupoB',
+    rounds: [],
+    teams: [
+      {
+        id: 10,
+        name: 'Fluminense Football Club',
+        surname: 'Fluminense',
+      },
+      {
+        id: 8,
+        name: 'Goiás Esporte Clube',
+        surname: 'Goiás',
+      },
+      {
+        id: 9,
+        name: 'Sport Club do Recife',
+        surname: 'Sport',
+      },
+      {
+        id: 7,
+        name: 'Esporte Clube Bahia',
+        surname: 'Bahia',
+      },
+      {
+        id: 11,
+        name: 'Associação Chapecoense de Futebol',
+        surname: 'Chapecoense',
+      },
+      {
+        id: 12,
+        name: 'Associação Portuguesa de Desportos',
+        surname: 'Portuguesa',
+      },
+    ],
+  },
+];
